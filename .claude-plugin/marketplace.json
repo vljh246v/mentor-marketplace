@@ -1,8 +1,7 @@
 {
   "name": "mentor-marketplace",
   "owner": {
-    "name": "jaehyun",
-    "url": "https://github.com/vljh246v"
+    "name": "jaehyun"
   },
   "metadata": {
     "version": "1.0.0",
@@ -17,8 +16,8 @@
       "author": {
         "name": "jaehyun"
       },
-      "category": ["productivity", "korean", "mentoring"],
-      "keywords": ["mentoring", "notion", "pdf", "korean", "청년미래플러스"]
+      "category": "productivity",
+      "tags": ["mentoring", "notion", "pdf", "korean"]
     }
   ]
 }
