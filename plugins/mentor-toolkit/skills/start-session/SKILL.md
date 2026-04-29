@@ -1,6 +1,6 @@
 ---
 name: start-session
-description: Briefs the mentor before a new mentoring session by loading prior session notes, mentee analysis, and the planned roadmap from Notion — then creates the new session page with previous homework auto-filled and updates the tracker status. Use when the user says "OO님 2차 시작", "OO님 다음 회차", "오늘 OO 멘토링", "OO님 멘토링 시작 (등록 멘티)", "박다솔 2차", "이번 회차 준비", "회차 브리핑", "start session", or any mention of starting a session for an already-registered mentee. NOT for new mentee registration (use init-mentoring for that).
+description: Briefs the mentor before a new mentoring session by loading prior session notes, mentee analysis, and the planned roadmap from Notion — then creates the new session page with previous homework auto-filled and updates the tracker status. Use when the user says "OO님 2차 시작", "OO님 다음 회차", "오늘 OO 멘토링", "OO님 멘토링 시작 (등록 멘티)", "김지훈 2차", "이번 회차 준비", "회차 브리핑", "start session", or any mention of starting a session for an already-registered mentee. NOT for new mentee registration (use init-mentoring for that).
 ---
 
 # Start Session — 회차 진입 브리핑
@@ -17,7 +17,7 @@ description: Briefs the mentor before a new mentoring session by loading prior s
 ## 입력
 
 다음 중 하나로 호출:
-- 멘티 이름만 (*"박다솔 2차 시작"*) — 트래커에서 식별
+- 멘티 이름만 (*"김지훈 2차 시작"*) — 트래커에서 식별
 - 멘티 페이지 URL — 직접 지정
 - 멘티 이름 + 회차 명시 (*"홍길동 추가 회차"*) — 4차+
 

@@ -59,7 +59,7 @@ description: Kick off the full mentoring workflow for a new mentee. Use when the
 트래커 DB를 조회해 같은 이름이 이미 등록돼 있으면 멘토에게 1회 묶어 묻기:
 > *"`{이름}`이라는 이름이 이미 등록돼 있습니다 (시작일 YYYY-MM-DD, 유형 X). 새 멘토링 사이클을 시작하시는 건가요? 아니면 기존 멘티의 추가 회차인가요?"*
 
-- "새 멘토링" → 트래커에 새 행 추가 (이름 뒤에 식별자, 예: "박다솔 (2)")
+- "새 멘토링" → 트래커에 새 행 추가 (이름 뒤에 식별자, 예: "김지훈 (2)")
 - "기존 멘티 추가 회차" → init-mentoring 종료, `start-session`으로 라우팅 안내
 
 ### Step 3: Notion 트래커 DB에 행 추가
