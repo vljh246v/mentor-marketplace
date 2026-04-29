@@ -11,10 +11,7 @@
   "plugins": [
     {
       "name": "mentor-toolkit",
-      "source": {
-        "source": "github",
-        "repo": "vljh246v/mentor-marketplace"
-      },
+      "source": "./",
       "description": "청년미래플러스 멘토링 자동화 — 멘티 등록·분석, 회차 진행, 회차 사이 작업, 공식 PDF 결과보고서 생성. 분야 무관(설정에서 선택), 회차 가변(1~N), 한글 PDF 직접 출력",
       "version": "0.1.0",
       "author": {
