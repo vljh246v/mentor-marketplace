@@ -1,17 +1,8 @@
 # mentor-marketplace
 
-청년미래플러스 멘토용 Claude 플러그인 모음. 멘토링 워크플로우 전체를 자동화하는 도구를 한곳에 모았습니다.
+청년미래플러스 멘토용 **Claude Code** 플러그인 모음. 멘토링 워크플로우 전체를 자동화하는 도구를 한곳에 모았습니다.
 
 ## 설치 방법
-
-### Cowork 사용자
-
-```
-/plugin marketplace add https://github.com/vljh246v/mentor-marketplace
-/plugin install mentor-toolkit@mentor-marketplace
-```
-
-### Claude Code 사용자
 
 ```bash
 claude plugin marketplace add https://github.com/vljh246v/mentor-marketplace
@@ -24,6 +15,12 @@ claude plugin install mentor-toolkit
 claude plugin update mentor-toolkit
 ```
 
+특정 버전으로 핀:
+
+```bash
+claude plugin install mentor-toolkit@v0.1.0
+```
+
 ---
 
 ## 포함된 플러그인
@@ -33,7 +30,7 @@ claude plugin update mentor-toolkit
 청년미래플러스 멘토링 자동화 풀 패키지.
 
 **핵심 기능**:
-- 멘티 자료 업로드만 하면 자동 등록·분석·트래킹
+- 멘티 자료 경로만 알려주면 자동 등록·분석·트래킹
 - 회차 사이 결과물 검토(이력서·자소서·PR·학습) 자동화
 - 회차 시작 시 컨텍스트 자동 로드 + 1분 브리핑
 - 종료 시 청년미래플러스 PDF 3종 직접 생성 (별지 3-1·3-2 + 참여자 역량 결과보고서)
@@ -55,8 +52,8 @@ claude plugin update mentor-toolkit
 
 ## 시스템 요구사항
 
-- **Cowork** 데스크톱 앱 또는 **Claude Code** CLI
-- **Notion MCP** 연결 (Cowork 설정 → 커넥터)
+- **Claude Code CLI** — https://docs.claude.com/en/docs/claude-code
+- **Notion MCP** 연결 (`claude mcp add notion ...` 또는 `~/.claude.json` / 작업 디렉터리 `.mcp.json` 등록)
 - **Python 3.10+** + 다음 패키지 (PDF 생성 시 자동 설치 안내):
   ```bash
   pip install --break-system-packages weasyprint jinja2 mplfonts requests
@@ -75,4 +72,4 @@ MIT (각 플러그인 LICENSE 참고)
 
 ## 작성자
 
-jaehyun
+jaehyun ([@vljh246v](https://github.com/vljh246v))

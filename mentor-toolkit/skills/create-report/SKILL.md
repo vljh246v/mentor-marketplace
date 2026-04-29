@@ -9,7 +9,7 @@ description: Generate the official 청년미래플러스 mentoring result docume
 
 ## 결과물 (PDF 3개)
 
-`${OUTPUTS_DIR}/`에 한글 파일명으로 직접 저장:
+현재 작업 디렉터리(`pwd`) 또는 멘토가 지정한 경로에 한글 파일명으로 직접 저장:
 
 1. `{멘티명}_별지3-1_멘토링일지.pdf` — 회차별 페이지 분리, 회차당 1장 = 최대 3장
 2. `{멘티명}_별지3-2_결과보고서.pdf` — 멘토 종합 + 서명, 2장
@@ -123,19 +123,22 @@ description: Generate the official 청년미래플러스 mentoring result docume
 
 ### Step 5: PDF 생성 스크립트 호출
 
-데이터를 JSON으로 임시 저장한 뒤 `scripts/build_pdfs.py` 호출:
+데이터를 JSON으로 임시 저장한 뒤 `scripts/build_pdfs.py` 호출. 출력 디렉터리는 멘토가 명시한 경로 또는 기본값(현재 작업 디렉터리 `pwd`):
 
 ```bash
-# 데이터 JSON을 임시 파일로 저장
+# 데이터 JSON을 임시 파일로 작성 (Write tool 사용 권장 — 따옴표·$ 안전)
 DATA_JSON=/tmp/mentor_report_$$.json
-echo '<JSON 데이터>' > "$DATA_JSON"
+
+# 출력 디렉터리 결정
+OUT_DIR="${MENTOR_OUTPUT_DIR:-$(pwd)}"   # 멘토가 다른 경로 지정 시 그쪽으로
+mkdir -p "$OUT_DIR"
 
 # PDF 생성 (mplfonts·weasyprint 의존)
-python3 ${CLAUDE_PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py \
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
   --json "$DATA_JSON" \
-  --output-dir "${OUTPUTS_DIR}"
+  --output-dir "$OUT_DIR"
 
-# 결과는 outputs 디렉터리에 3개 PDF
+# 결과는 $OUT_DIR에 3개 PDF
 ```
 
 스크립트 의존성이 없으면 한 번에 설치:
@@ -166,9 +169,10 @@ json.dump(data, open('/tmp/mentor_report_$$.json','w',encoding='utf-8'), ensure_
 ```
 ✅ 결과 보고서 PDF 3종 생성 완료: {멘티}
 
-📄 [View 별지 3-1 멘토링 일지](computer://...)
-📄 [View 별지 3-2 결과보고서](computer://...)
-📄 [View 참여자 역량 결과보고서](computer://...)
+📁 저장 경로: {OUT_DIR}
+- {멘티}_별지3-1_멘토링일지.pdf
+- {멘티}_별지3-2_결과보고서.pdf
+- {멘티}_참여자역량결과보고서.pdf
 
 🧾 핵심 요약
 - 트랙: {구직청년 / 재직청년}

@@ -27,7 +27,7 @@ description: First-time setup for the mentor-toolkit plugin. Creates the Notion 
 ### Step 1: 사전 점검
 
 - Notion MCP가 연결돼 있는지 확인
-- 안 돼 있으면 *"Notion MCP를 먼저 연결해주세요. (Cowork 설정 → 커넥터)"* 안내 후 종료
+- 안 돼 있으면 *"Notion MCP를 먼저 연결해주세요. Claude Code에서 `claude mcp add notion ...` 명령 또는 `~/.claude.json` / 작업 디렉터리 `.mcp.json`에 추가"* 안내 후 종료
 
 ### Step 2: 멘토 정보 한 번에 수집
 
@@ -182,7 +182,7 @@ create-report 스킬은 청년미래플러스 PDF 3종을 직접 생성합니다
 # 🚀 사용 가이드
 
 ## 새 멘티 시작
-1. Cowork에 멘티 자료 업로드 또는 *"새 멘티 시작"* 입력
+1. 멘티 자료 파일 경로를 알려주거나 *"새 멘티 시작"* 입력 (예: *"박다솔 멘토링 시작. 이력서: ~/Downloads/박다솔.pdf"*)
 2. `init-mentoring` 스킬이 자동으로 등록·분석
 
 ## 멘토링 도중
@@ -221,7 +221,7 @@ create-report 스킬은 청년미래플러스 PDF 3종을 직접 생성합니다
 - 주 분야: {분야} (NCS: {NCS 코드})
 
 🚀 다음 단계
-이제 첫 멘티를 시작하실 수 있어요. Cowork에 멘티 이력서/자기소개서를 끌어다 놓거나
+이제 첫 멘티를 시작하실 수 있어요. 멘티 이력서·자기소개서 파일 경로를 알려주거나
 *"새 멘티 시작해줘"*라고 입력하시면 자동으로 등록·분석됩니다.
 ```
 
