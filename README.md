@@ -21,18 +21,34 @@
 
 ### 2단계. 플러그인 설치
 
-GitHub에서 직접 한 줄로 설치:
+마켓플레이스 등록 후 플러그인 설치 — 두 단계:
 
 ```bash
-claude plugin install github:vljh246v/mentor-marketplace
+# 1) 마켓플레이스 등록
+claude plugin marketplace add https://github.com/vljh246v/mentor-toolkit
+
+# 2) 플러그인 설치
+claude plugin install mentor-toolkit@mentor-marketplace
 ```
 
-(repo 이름을 `mentor-toolkit`으로 rename하셨다면 `github:vljh246v/mentor-toolkit`)
-
-업데이트 받기:
+설치 확인:
 
 ```bash
-claude plugin update mentor-toolkit
+claude plugin list
+```
+
+업데이트 받기 (마켓플레이스 캐시 새로고침 후 재설치):
+
+```bash
+claude plugin marketplace update mentor-marketplace
+claude plugin install mentor-toolkit@mentor-marketplace
+```
+
+제거:
+
+```bash
+claude plugin uninstall mentor-toolkit@mentor-marketplace
+claude plugin marketplace remove mentor-marketplace
 ```
 
 ### 3단계. 셋업 (1회만)
@@ -215,7 +231,7 @@ Claude Code 세션을 열고:
 ## FAQ
 
 **Q. 다른 멘토에게 마켓플레이스를 공유하면 그쪽도 똑같이 동작하나요?**
-A. 네. 그쪽 멘토도 `claude plugin install mentor-toolkit` 후 `setup-mentor-toolkit`을 한 번만 실행하면 본인 환경에 맞는 Notion 구조와 설정이 자동으로 만들어집니다.
+A. 네. 그쪽 멘토도 위 2단계 (marketplace add + plugin install) 실행 후 `setup-mentor-toolkit`을 한 번만 호출하면 본인 환경에 맞는 Notion 구조와 설정이 자동으로 만들어집니다.
 
 **Q. 분야를 바꾸고 싶을 때?**
 A. Notion `⚙️ 멘토링 설정` 페이지에서 직접 수정. 다음 멘티부터 자동 반영.
