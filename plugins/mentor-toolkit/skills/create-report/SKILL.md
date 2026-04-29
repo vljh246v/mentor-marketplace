@@ -136,20 +136,54 @@ python3 "${CLAUDE_PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
 # 결과는 $OUT_DIR에 2개 PDF
 ```
 
-스크립트 의존성이 없으면 한 번에 설치:
+#### 의존성 설치 (처음 한 번)
+
+**중요**: weasyprint는 Python 패키지뿐 아니라 시스템 라이브러리(pango/cairo/gobject)에도 의존. OS별 사전 설치 필요.
+
 ```bash
+# 1단계: OS별 시스템 라이브러리 설치
+# macOS
+brew install pango
+
+# Ubuntu/Debian
+sudo apt install libpango-1.0-0 libpangoft2-1.0-0 libcairo2
+
+# Fedora/RHEL
+sudo dnf install pango cairo
+
+# 2단계: Python 패키지 설치
 pip install --break-system-packages --quiet weasyprint jinja2 mplfonts requests
 ```
 
-JSON 임시 파일 작성 시 따옴표·`$` 같은 특수문자 안전 처리를 위해 `echo` 대신 Python heredoc 사용 권장:
+#### 사전 점검 스크립트
+
+PDF 생성 전 의존성 확인:
+
 ```bash
-python3 -c "
-import json, sys
-data = $JSON_STRING_AS_PYTHON_DICT
-json.dump(data, open('/tmp/mentor_report_$$.json','w',encoding='utf-8'), ensure_ascii=False, indent=2)
-"
+python3 -c "import weasyprint; print('weasyprint OK')" 2>&1 | head -5
 ```
-또는 Write 도구로 직접 파일 생성.
+
+- `cannot load library 'libgobject-2.0-0'` 에러 → **시스템 라이브러리 누락**. 위 OS별 명령으로 설치 후 재시도.
+- macOS에서 brew로 설치했는데도 실패 시: `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` 환경변수 설정 후 재시도 (Apple Silicon).
+- `ModuleNotFoundError: No module named 'weasyprint'` 에러 → Python 패키지 누락. 2단계 설치 명령 실행.
+
+#### JSON 임시 파일 작성
+
+따옴표·`$` 같은 특수문자 안전 처리를 위해 **Write 도구로 직접 파일 생성** 권장. bash에서 작성할 경우 Python heredoc 사용:
+
+```bash
+# 예시: 미리 정리한 dict를 직접 Python 변수로 넘긴 뒤 JSON 저장
+python3 << 'PYEOF'
+import json
+data = {
+    "mentor.org": "...",
+    "mentor.name": "...",
+    # ... (스킬이 Notion에서 수집한 모든 키)
+}
+with open("/tmp/mentor_report.json", "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+PYEOF
+```
 
 **재생성 정책**: 같은 멘티에 대해 create-report를 다시 호출하면 기존 PDF는 **덮어쓰기**됩니다. 백업이 필요하면 호출 전 기존 파일을 다른 이름으로 복사. 부분 수정만 원하시면 멘티의 Notion 회차 페이지를 먼저 수정한 뒤 재호출.
 

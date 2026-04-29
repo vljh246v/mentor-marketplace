@@ -1,11 +1,23 @@
 ---
 name: company-recommender
-description: Recommend Korean backend developer target companies for a mentee. Use when the user asks "회사 추천", "어디 지원해야 해", "타겟 회사 정해줘", "이직 후보군", "추천 회사 알려줘", "어떤 회사가 맞을까", "company recommendation", or pastes a mentee profile and asks where to apply. Produces a ranked list with fit score, reasons, gaps, and application priority for each of the 5 mentee types (구직자/재직자-적응/재직자-이직/재직자-성장/학생/취준).
+description: Recommend Korean target companies for a mentee across backend, frontend, mobile, data·AI, DevOps, design (UI/UX·visual·product), and planning·PM·PO·marketing. Use when the user asks "회사 추천", "어디 지원해야 해", "타겟 회사 정해줘", "이직 후보군", "추천 회사 알려줘", "어떤 회사가 맞을까", "company recommendation", or pastes a mentee profile and asks where to apply. Produces a ranked list with fit score, reasons, gaps, and application priority for each of the 5 mentee types (구직자/재직자-적응/재직자-이직/재직자-성장/학생/취준).
 ---
 
 # Company Recommender
 
-멘티 정보(유형·경력·기술스택·가치관)를 받아 한국 백엔드 시장에서 적절한 타겟 회사군을 추천한다.
+멘티 정보(유형·경력·기술스택·가치관)를 받아 한국 시장에서 적절한 타겟 회사군을 추천한다.
+
+## 분야 결정 (DB 섹션 진입점)
+
+`⚙️ 멘토링 설정` 페이지의 **주 분야**를 먼저 읽고, `references/company-database.md`의 해당 섹션만 사용:
+
+| 멘토 주 분야 | DB 섹션 |
+|-------------|---------|
+| 백엔드 / 프론트엔드 / 풀스택 / 모바일 / 데이터·AI / DevOps | `## 개발 분야` |
+| UI/UX·시각·제품 디자인 | `## 디자인 분야` |
+| 서비스 기획 / PM / PO / 마케팅 / 그로스 | `## 기획·PM 분야` |
+
+분야 무관 회사(토스·카카오·우아한형제들 등)는 같은 회사가 여러 섹션에 등장. 분석 차원만 분야에 맞춘다.
 
 ## 라이브 데이터 수집 — `company-research-agent` 호출
 
