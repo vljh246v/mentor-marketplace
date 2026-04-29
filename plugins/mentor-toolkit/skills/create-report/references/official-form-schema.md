@@ -45,7 +45,7 @@
 | `sN.session` | 활동회차 | `구직청년 멘토링 N회차` 또는 `재직청년 멘토링 N회차` |
 | `sN.topic` | 활동주제 | 한 줄 |
 | `sN.content` | 멘토링 내용 (긴 텍스트) | ○ 4단 구조 |
-| `sN.photo1`, `sN.photo2` | 사진 | JSON으로 처리 안 함 (멘토가 HTML에서 직접 업로드) |
+| `sN.photo1`, `sN.photo2` | 사진 | Notion 회차 페이지의 📷 사진 섹션에서 URL 추출 → base64 인코딩 후 JSON에 포함. 사진 없으면 빈 문자열 `""`. 회차당 최대 2장, 초과 시 처음 2장만. |
 
 ### `sN.content` 작성 구조
 

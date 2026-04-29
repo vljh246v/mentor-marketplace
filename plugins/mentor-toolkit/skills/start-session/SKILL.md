@@ -169,9 +169,10 @@ description: Briefs the mentor before a new mentoring session by loading prior s
 - 다룬 주제: ...
 - 멘토 핵심 조언: ...
 - 부여한 과제 (오늘 점검):
-  □ 과제 1 — {between-sessions 기록 있으면 상태 표시: ✅완료 / 🟡부분 / ❌미완 / 📝검토됨}
+  □ 과제 1 — {between-sessions 기록 있으면 상태 표시: ✅완료 / 🟡부분 / ❌미완 / 📝검토됨. 기록 없으면 상태 칸 비움}
   □ 과제 2
   □ 과제 3
+  ※ between-sessions를 사용하지 않았다면 상태 표시 없이 과제 목록만 나열하고, 하단에 "(회차 사이 업데이트 없음 — 시작 시 구두로 과제 확인)" 한 줄 추가.
 
 📨 회차 사이 업데이트 (between-sessions가 기록한 것)
 - {YYYY-MM-DD} 자소서 v2 검토 → STAR 향상, 정량 보강 권장

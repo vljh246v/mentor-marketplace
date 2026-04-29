@@ -88,7 +88,7 @@ description: Kick off the full mentoring workflow for a new mentee. Use when the
 
 ### Step 4: Notion 멘티 페이지 생성
 
-**`📚 멘토링 자동화 허브`의 부모 페이지** (setup-mentor-toolkit이 처음 셋업 시 사용자가 지정한 부모) 아래에 멘티 이름으로 빈 페이지 생성. 부모 페이지를 모르면 `⚙️ 멘토링 설정` 페이지의 ancestor를 fetch해서 동적으로 결정. 페이지 ID를 받아 Step 3의 트래커 DB 행 `멘티 페이지` 컬럼에 URL 입력.
+**`📚 멘토링 자동화 허브`** 안에 멘티 이름으로 빈 페이지 생성. 허브 페이지 ID는 `⚙️ 멘토링 설정` 페이지의 `parent.page_id`를 fetch해서 결정 (설정 페이지의 부모 = 허브). 페이지 ID를 받아 Step 3의 트래커 DB 행 `멘티 페이지` 컬럼에 URL 입력.
 
 ### Step 5: 멘티 분석 페이지 생성
 
