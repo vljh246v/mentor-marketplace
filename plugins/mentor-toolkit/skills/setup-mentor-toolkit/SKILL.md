@@ -164,17 +164,25 @@ create-report 스킬은 청년미래플러스 PDF 3종을 직접 생성합니다
 
 ### Step 8: 템플릿 모음 7장 생성
 
-기존 템플릿 마크다운을 그대로 재사용. 각 템플릿은 별도 하위 페이지로:
+`references/templates/` 디렉터리의 마크다운 파일 7개를 **그대로** Notion 페이지로 복제. 본문을 즉석에서 만들지 말 것 (오타·구조 불일치 원인).
 
-1. `1️⃣ 멘티 분석 템플릿`
-2. `2️⃣ 1차 멘토링 템플릿`
-3. `3️⃣ 2차 멘토링 템플릿`
-4. `4️⃣ 3차 멘토링 템플릿`
-5. `➕ 추가 회차 템플릿 (4차+)`
-6. `🚫 조기 종료 메모 템플릿`
-7. `5️⃣ 결과 보고서 템플릿 (Notion 비공식)`
+| 파일 | Notion 페이지 제목 | icon |
+|------|------------------|------|
+| `references/templates/01-mentee-analysis.md` | `멘티 분석 템플릿` | 1️⃣ |
+| `references/templates/02-session-1.md` | `1차 멘토링 템플릿` | 2️⃣ |
+| `references/templates/03-session-2.md` | `2차 멘토링 템플릿` | 3️⃣ |
+| `references/templates/04-session-3.md` | `3차 멘토링 템플릿` | 4️⃣ |
+| `references/templates/05-session-extra.md` | `추가 회차 템플릿 (4차+)` | ➕ |
+| `references/templates/06-early-termination.md` | `조기 종료 메모 템플릿` | 🚫 |
+| `references/templates/07-result-report.md` | `결과 보고서 템플릿 (Notion 비공식)` | 5️⃣ |
 
-각 템플릿은 분야 무관하게 사용 가능한 일반 형식으로. 분야별 특화는 스킬 실행 시 `⚙️ 멘토링 설정`을 읽어 동적으로 적용.
+복제 절차:
+1. 파일을 Read 도구로 읽음
+2. 1번째 `# 제목` 라인은 페이지 title로 (이모지 제외)
+3. 나머지 본문을 `notion-create-pages`의 content로 그대로 전달
+4. `icon` 필드에 표의 이모지 설정 (title 속성에는 이모지 넣지 않음 — Step 5의 이모지 중복 방지 규칙 동일 적용)
+
+분야별 특화는 스킬 실행 시 `⚙️ 멘토링 설정`을 읽어 동적으로 적용 (예: 재직청년 트랙은 3차에 경력설계 로드맵 섹션이 이미 템플릿에 포함됨).
 
 ### Step 9: 사용 가이드 페이지
 
