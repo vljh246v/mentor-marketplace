@@ -23,7 +23,7 @@ pip install --break-system-packages weasyprint jinja2 mplfonts requests
 ```
 macOS라면 시스템 라이브러리도 필요할 수 있습니다.
 ```bash
-brew install pango libffi
+brew install pango
 ```
 
 ### 2단계. 플러그인 설치
