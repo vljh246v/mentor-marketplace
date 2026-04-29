@@ -14,7 +14,7 @@ description: Generate the official 청년미래플러스 mentoring result docume
 1. `{멘티명}_별지3-1_멘토링일지.pdf` — 회차별 페이지 분리, 회차당 1장 = 최대 3장
 2. `{멘티명}_별지3-2_결과보고서.pdf` — 멘토 종합 + 서명, 2장
 
-각 PDF는 weasyprint + Noto Sans CJK 폰트로 한글 정상 렌더링. 사진은 Notion 회차 페이지에서 자동 가져옴. 멘토는 PDF 받자마자 그대로 제출하거나, 서명 부분만 출력 후 수기로 도장.
+각 PDF는 weasyprint + Noto Sans CJK 폰트로 한글을 정상 렌더링. 사진은 Notion 회차 페이지에서 자동으로 가져옴. 멘토는 PDF 받자마자 그대로 제출하거나, 서명 부분만 출력 후 수기로 도장.
 
 > **참여자역량결과보고서(사전 평가지)**: `pre-assessment` 스킬로 분리. 멘토링 시작 전 별도 생성.
 
@@ -55,7 +55,7 @@ description: Generate the official 청년미래플러스 mentoring result docume
 - 그 외 (≥3회 또는 계획대로) → "정상 완료"
 - 진행한 회차 = 0 → 보고서 생성 중단 ("회차 데이터가 없습니다. 분석만 있는 상태인데 계속 진행할까요?")
 
-호출 시작 시 진행 상태가 `완료`/`조기 종료`가 아니면 `보고서 작성중`으로 1차 갱신, 보고서 완성 후 최종 상태로 갱신.
+호출 시작 시 진행 상태가 `완료`/`조기 종료`가 아니면 `보고서 작성중`으로 먼저 갱신하고, 보고서 완성 후 최종 상태로 갱신.
 
 ### Step 2: Notion 멘티 페이지 컨텍스트 수집
 
@@ -67,7 +67,7 @@ description: Generate the official 청년미래플러스 mentoring result docume
 - 추가 회차 페이지(4차+)가 있을 때 모두 수집
 - 조기 종료 메모
 
-**빈 회차 처리**: 페이지가 존재하지만 본문이 비어 있으면 *"OO차 노트가 비어있습니다. 진행한 게 맞으면 멘토님이 1~2줄만 알려주세요. 빠뜨리고 PDF 만들면 회차가 누락됩니다"* 1회 확인.
+**빈 회차 처리**: 페이지가 존재하지만 본문이 비어 있으면 *"OO차 노트가 비어있습니다. 진행한 게 맞으면 멘토님이 1~2줄만 알려주세요. 빠뜨리고 PDF를 만들면 회차가 누락됩니다"* 1회 확인.
 
 ### Step 3: 사진 자동 수집
 
@@ -164,7 +164,7 @@ python3 -c "import weasyprint; print('weasyprint OK')" 2>&1 | head -5
 ```
 
 - `cannot load library 'libgobject-2.0-0'` 에러 → **시스템 라이브러리 누락**. 위 OS별 명령으로 설치 후 재시도.
-- macOS에서 brew로 설치했는데도 실패 시: `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` 환경변수 설정 후 재시도 (Apple Silicon).
+- macOS에서 brew로 설치했는데도 실패하면: `DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib` 환경변수 설정 후 재시도 (Apple Silicon).
 - `ModuleNotFoundError: No module named 'weasyprint'` 에러 → Python 패키지 누락. 2단계 설치 명령 실행.
 
 #### JSON 임시 파일 작성
@@ -185,7 +185,7 @@ with open("/tmp/mentor_report.json", "w", encoding="utf-8") as f:
 PYEOF
 ```
 
-**재생성 정책**: 같은 멘티에 대해 create-report를 다시 호출하면 기존 PDF는 **덮어쓰기**됩니다. 백업이 필요하면 호출 전 기존 파일을 다른 이름으로 복사. 부분 수정만 원하시면 멘티의 Notion 회차 페이지를 먼저 수정한 뒤 재호출.
+**재생성 정책**: 같은 멘티에 대해 create-report를 다시 호출하면 기존 PDF는 **덮어쓰기**됩니다. 백업이 필요하면 호출 전 기존 파일을 다른 이름으로 복사. 부분 수정만 원하면 멘티의 Notion 회차 페이지를 먼저 수정한 뒤 재호출.
 
 ### Step 6: 멘티 트래커 상태 갱신
 
