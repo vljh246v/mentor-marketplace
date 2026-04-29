@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>청년미래플러스 참여자 역량 결과보고서</title>
+<style>
+{% include '_base.css' %}
+</style>
+</head>
+<body>
+
+<h1 class="page-title">청년미래플러스 참여자 역량 결과보고서</h1>
+
+<table>
+  <tr>
+    <th>진행일자</th>
+    <td class="fill center" colspan="3">{{ date }}</td>
+  </tr>
+  <tr>
+    <th>참여자</th>
+    <td colspan="3" style="padding:0">
+      <div style="text-align:center; padding:6px 8px; border-bottom:1px dashed #aaa;">
+        ( {{ mentee_name }} )
+      </div>
+      {% if mentor_group %}
+      <div style="text-align:center; padding:6px 8px; font-size:9pt; color:#444; line-height:1.5">
+        {{ mentor_group | safe }}
+      </div>
+      {% endif %}
+    </td>
+  </tr>
+  <tr>
+    <th style="width:90px">희망 직무</th>
+    <td class="fill" style="width:35%">{{ target_job }}</td>
+    <th style="width:90px">담당 멘토</th>
+    <td class="fill">{{ mentor_name }}</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="bg-head">제출 서류 검토 결과</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="long" style="min-height:50mm">{{ doc_review | nl2br | safe }}</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="bg-head">희망 직무 대비 서류 및 역량 완성도</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="long" style="min-height:50mm">{{ completeness | nl2br | safe }}</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="bg-head">멘토링 및 역량 강화 방안</td>
+  </tr>
+  <tr>
+    <td colspan="4" class="long" style="min-height:50mm">{{ plan | nl2br | safe }}</td>
+  </tr>
+</table>
+
+</body>
+</html>

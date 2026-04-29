@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>청년미래플러스 멘토링 일지</title>
+<style>
+{% include '_base.css' %}
+</style>
+</head>
+<body>
+
+{% for s in sessions %}
+<div class="section-marker">[별지 3-1]</div>
+<h1 class="page-title">청년미래플러스 멘토링 일지 (멘토용)</h1>
+
+<table>
+  <tr><th>일시</th><td class="fill">{{ s.datetime }}</td></tr>
+  <tr><th>장소</th><td class="fill">
+    {% if s.place == '대면' %}■ 대면{% else %}□ 대면{% endif %}
+    &nbsp;&nbsp;
+    {% if s.place == '비대면' %}■ 비대면{% else %}□ 비대면{% endif %}
+    {% if s.place_detail %}&nbsp;&nbsp;({{ s.place_detail }}){% endif %}
+  </td></tr>
+  <tr><th>참석자</th><td style="padding:0">
+    <table style="border:0; margin:-1px">
+      <tr>
+        <th style="width:55px">구분</th>
+        <th>소속</th>
+        <th>성명</th>
+      </tr>
+      <tr><th>멘토</th><td class="fill">{{ mentor_org }}</td><td class="fill">{{ mentor_name }}</td></tr>
+      <tr><th>멘티</th><td class="fill">{{ mentee_org }}</td><td class="fill">{{ mentee_name }}</td></tr>
+    </table>
+  </td></tr>
+  <tr><th>멘토링 분야</th><td class="fill">☑ {{ field }}</td></tr>
+  <tr><th>활동회차</th><td class="fill">{{ s.session }}</td></tr>
+  <tr><th>활동주제</th><td class="fill">{{ s.topic }}</td></tr>
+</table>
+
+<h2>멘토링 내용</h2>
+<table>
+  <tr><td class="long">{{ s.content | nl2br | safe }}</td></tr>
+</table>
+
+<h2>멘토링 사진</h2>
+<table>
+  <tr>
+    <td class="photo-cell">
+      {% if s.photo1 %}<img src="{{ s.photo1 }}">{% else %}<div class="placeholder">📷 사진 1</div>{% endif %}
+    </td>
+    <td class="photo-cell">
+      {% if s.photo2 %}<img src="{{ s.photo2 }}">{% else %}<div class="placeholder">📷 사진 2</div>{% endif %}
+    </td>
+  </tr>
+</table>
+
+<table style="margin-top:-1px">
+  <tr>
+    <th>첨부</th>
+    <td class="attach-note">
+      * 멘토링 과정에서 사용한 진로·직무 설명자료, PPT 및 참고자료 등 실제 활동에 활용된 자료 첨부<br>
+      * 재직청년 멘토링의 경우 3회차 결과물로 <b>경력설계 로드맵</b> 제출 필수
+    </td>
+  </tr>
+</table>
+
+{% if not loop.last %}<div class="page-break"></div>{% endif %}
+{% endfor %}
+
+</body>
+</html>
