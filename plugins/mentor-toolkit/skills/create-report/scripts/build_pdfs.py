@@ -183,6 +183,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="청년미래플러스 멘토링 PDF 생성")
     parser.add_argument("--json", "-j", required=True, help="입력 JSON 파일 경로")
     parser.add_argument("--output-dir", "-o", required=True, help="PDF 저장 디렉터리")
+    parser.add_argument("--only", choices=["journal", "report", "capability"], action="append", dest="only", help="생성할 PDF 지정 (반복 가능). 생략 시 전체 생성")
     args = parser.parse_args()
 
     json_path = Path(args.json)
@@ -196,10 +197,14 @@ def main() -> int:
     data = json.loads(json_path.read_text(encoding="utf-8"))
     mentee = data.get("mentee.name") or "untitled"
 
+    only = set(args.only) if args.only else {"journal", "report", "capability"}
     paths = []
-    paths.append(build_journal_pdf(data, output_dir, mentee))
-    paths.append(build_report_pdf(data, output_dir, mentee))
-    paths.append(build_capability_pdf(data, output_dir, mentee))
+    if "journal" in only:
+        paths.append(build_journal_pdf(data, output_dir, mentee))
+    if "report" in only:
+        paths.append(build_report_pdf(data, output_dir, mentee))
+    if "capability" in only:
+        paths.append(build_capability_pdf(data, output_dir, mentee))
 
     print(json.dumps(
         {"output_dir": str(output_dir), "files": [str(p) for p in paths]},

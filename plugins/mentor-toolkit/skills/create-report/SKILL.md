@@ -1,21 +1,22 @@
 ---
 name: create-report
-description: Generate the official 청년미래플러스 mentoring result documents as PDF files directly from a mentee's Notion page. Output 3 PDFs ([별지 3-1] 멘토링 일지 3회차 통합 + [별지 3-2] 결과보고서 + 참여자 역량 결과보고서). Pulls session notes, photos, and analysis from Notion automatically. Writes in natural human-mentor voice — no AI tells. Session datetimes follow the operator's announced schedule (set in 멘토링 설정), not actual mentoring dates. Use when the user says "보고서 만들어줘", "양식 채워줘", "결과보고서 작성", "PDF 뽑아줘", "create report", "역량 결과보고서", "사전 평가지", "공식 양식", "제출용 보고서", or shares a Notion mentee page URL after mentoring ends. Works for any session count (1~N), respects 구직청년/재직청년 track differences.
+description: Generate the official 청년미래플러스 mentoring result documents as PDF files directly from a mentee's Notion page. Output 2 PDFs ([별지 3-1] 멘토링 일지 3회차 통합 + [별지 3-2] 결과보고서). Pulls session notes, photos, and analysis from Notion automatically. Writes in natural human-mentor voice — no AI tells. Session datetimes follow the operator's announced schedule (set in 멘토링 설정), not actual mentoring dates. Use when the user says "보고서 만들어줘", "양식 채워줘", "결과보고서 작성", "PDF 뽑아줘", "create report", "공식 양식", "제출용 보고서", or shares a Notion mentee page URL after mentoring ends. Works for any session count (1~N), respects 구직청년/재직청년 track differences. For 참여자역량결과보고서(사전 평가지), use pre-assessment skill instead.
 ---
 
 # Create Report — 청년미래플러스 PDF 생성기
 
 > **전제조건**: `setup-mentor-toolkit`이 한 번 실행돼서 `⚙️ 멘토링 설정`이 있어야 함. 없으면 `setup-mentor-toolkit` 먼저 실행하라고 안내 후 종료.
 
-## 결과물 (PDF 3개)
+## 결과물 (PDF 2개)
 
 현재 작업 디렉터리(`pwd`) 또는 멘토가 지정한 경로에 한글 파일명으로 직접 저장:
 
 1. `{멘티명}_별지3-1_멘토링일지.pdf` — 회차별 페이지 분리, 회차당 1장 = 최대 3장
 2. `{멘티명}_별지3-2_결과보고서.pdf` — 멘토 종합 + 서명, 2장
-3. `{멘티명}_참여자역량결과보고서.pdf` — 사전 평가지, 1장
 
 각 PDF는 weasyprint + Noto Sans CJK 폰트로 한글 정상 렌더링. 사진은 Notion 회차 페이지에서 자동 가져옴. 멘토는 PDF 받자마자 그대로 제출하거나, 서명 부분만 출력 후 수기로 도장.
+
+> **참여자역량결과보고서(사전 평가지)**: `pre-assessment` 스킬로 분리. 멘토링 시작 전 별도 생성.
 
 ## 절대 규칙
 
@@ -70,8 +71,9 @@ description: Generate the official 청년미래플러스 mentoring result docume
 
 ### Step 3: 사진 자동 수집
 
-각 회차 멘토링 페이지에 멘토가 첨부해 둔 이미지를 추출:
-- Notion 페이지의 첨부 이미지 URL을 fetch (notion-fetch 결과의 이미지 블록)
+각 회차 멘토링 페이지의 **`📷 사진` 섹션**에서 이미지 블록을 추출:
+- `📷 사진` heading 아래 이미지 블록 URL을 순서대로 가져옴
+- `📷 사진` 섹션이 없으면 페이지 전체에서 이미지 블록 fallback 탐색
 - 없으면 빈 자리로 두고 "사진 없음" 표시
 - 회차당 최대 2장. 더 많으면 처음 2장만.
 
@@ -113,14 +115,6 @@ description: Generate the official 청년미래플러스 mentoring result docume
 - `r.signYear/Month/Day`: 제출일
 - `r.signOrg/Title/Name`: 설정에서 가져온 멘토 본인 정보
 
-#### 참여자 역량 결과보고서
-
-- `cap.date`: 1회차 진행일자 (운영기관 공지)
-- `cap.targetJob`: 멘티 분석에서 추출한 희망 직무
-- `cap.docReview`: ● 4항목 (제출 서류 / 이력서 / 포트폴리오 / 직무능력은행)
-- `cap.completeness`: ● 강점 1~2개 + 약점 1~2개 (요지 + 서술)
-- `cap.plan`: ● 강점·약점에 1:1 대응되는 활동·강의·과제 (구체 강의명·도서명 명시)
-
 ### Step 5: PDF 생성 스크립트 호출
 
 데이터를 JSON으로 임시 저장한 뒤 `scripts/build_pdfs.py` 호출. 출력 디렉터리는 멘토가 명시한 경로 또는 기본값(현재 작업 디렉터리 `pwd`):
@@ -136,9 +130,10 @@ mkdir -p "$OUT_DIR"
 # PDF 생성 (mplfonts·weasyprint 의존)
 python3 "${CLAUDE_PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
   --json "$DATA_JSON" \
-  --output-dir "$OUT_DIR"
+  --output-dir "$OUT_DIR" \
+  --only journal --only report
 
-# 결과는 $OUT_DIR에 3개 PDF
+# 결과는 $OUT_DIR에 2개 PDF
 ```
 
 스크립트 의존성이 없으면 한 번에 설치:
@@ -167,12 +162,11 @@ json.dump(data, open('/tmp/mentor_report_$$.json','w',encoding='utf-8'), ensure_
 ### Step 7: 사용자에게 결과 안내
 
 ```
-✅ 결과 보고서 PDF 3종 생성 완료: {멘티}
+✅ 결과 보고서 PDF 2종 생성 완료: {멘티}
 
 📁 저장 경로: {OUT_DIR}
 - {멘티}_별지3-1_멘토링일지.pdf
 - {멘티}_별지3-2_결과보고서.pdf
-- {멘티}_참여자역량결과보고서.pdf
 
 🧾 핵심 요약
 - 트랙: {구직청년 / 재직청년}
@@ -197,7 +191,7 @@ json.dump(data, open('/tmp/mentor_report_$$.json','w',encoding='utf-8'), ensure_
 
 ## 부분 출력 (회차 가변)
 
-- 1회만 진행 → 별지 3-1은 1장만, 결과보고서·역량보고서는 가능한 만큼만 작성
+- 1회만 진행 → 별지 3-1은 1장만, 결과보고서는 가능한 만큼만 작성
 - 4차+ → 별지 3-1은 양식상 3차까지만 표기, 추가 회차 내용은 결과보고서 `r.outcome` 정성적 변화에 압축
 - 조기 종료 → 종료 사유 직접 표기 금지. `r.outcome`에 *"OO 시점부터 멘티 사정으로 N회로 마무리"* 자연스럽게 표현
 
@@ -205,5 +199,6 @@ json.dump(data, open('/tmp/mentor_report_$$.json','w',encoding='utf-8'), ensure_
 
 - `setup-mentor-toolkit` → 1회 셋업 (이 스킬의 전제)
 - `init-mentoring`, `mentee-analyzer`, `company-recommender`, `resume-reviewer`, `interview-prep` → 멘토링 도중 도구
-- **`create-report` (이 스킬)** → 멘토링 종료 후 공식 PDF 3종 생성 (종착점)
+- **`create-report` (이 스킬)** → 멘토링 종료 후 공식 PDF 2종 생성 (종착점)
+- `pre-assessment` → 1차 시작 전 사전 평가지(참여자역량결과보고서) PDF 생성
 - `report-writer` → Notion 비공식 자유 정리 (보조)
