@@ -2,14 +2,20 @@
 """
 청년미래플러스 멘토링 결과 문서 PDF 생성기.
 
-입력: stdin으로 JSON (data-k 스키마와 동일)
-출력: PDF 3개를 --output-dir로 지정한 디렉터리에 저장 (기본은 호출자가 지정)
-  - {멘티명}_별지3-1_멘토링일지.pdf  (3회차 합본)
-  - {멘티명}_별지3-2_결과보고서.pdf
-  - {멘티명}_참여자역량결과보고서.pdf
+입력: --json 으로 JSON 파일 경로 (data-k 스키마와 동일)
+출력: --only 플래그로 1~3개 선택 생성 (생략 시 3개 전부)
+  - {멘티명}_별지3-1_멘토링일지.pdf       (--only journal,    1~N회차 동적 검출 합본)
+  - {멘티명}_별지3-2_결과보고서.pdf       (--only report)
+  - {멘티명}_참여자역량결과보고서.pdf     (--only capability, 사전 평가지)
 
-의존:
-  pip install --break-system-packages weasyprint jinja2 mplfonts requests
+호출 스킬별 사용 패턴:
+  - create-report  → --only journal --only report  (PDF 2개)
+  - pre-assessment → --only capability             (PDF 1개)
+
+의존(venv 권장):
+  python3 -m venv ~/.venvs/mentor-toolkit
+  source ~/.venvs/mentor-toolkit/bin/activate
+  pip install weasyprint jinja2 mplfonts requests
 """
 
 from __future__ import annotations
@@ -23,22 +29,26 @@ import sys
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from weasyprint import HTML
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 TEMPLATE_DIR = SCRIPT_DIR / "templates"
 
-# Noto Sans CJK ships with mplfonts package
-try:
-    import mplfonts
-    FONT_DIR = Path(mplfonts.__file__).parent / "fonts"
-    NOTO_REGULAR = FONT_DIR / "NotoSansCJKsc-Regular.otf"
-    NOTO_BOLD = NOTO_REGULAR  # mplfonts has Regular only; bold via CSS font-weight
-    if not NOTO_REGULAR.exists():
-        raise FileNotFoundError(NOTO_REGULAR)
-except Exception as e:
-    print(f"한글 폰트 로드 실패: {e}", file=sys.stderr)
-    sys.exit(1)
+DRY_RUN = False  # main()에서 --dry-run 플래그로 토글
+NOTO_REGULAR: Path | None = None  # _load_runtime()에서 채움
+
+
+def _load_runtime() -> None:
+    """weasyprint·mplfonts는 dry-run에서는 import 자체 생략 (테스트 환경 가벼움)."""
+    global NOTO_REGULAR
+    try:
+        import mplfonts
+        font_dir = Path(mplfonts.__file__).parent / "fonts"
+        NOTO_REGULAR = font_dir / "NotoSansCJKsc-Regular.otf"
+        if not NOTO_REGULAR.exists():
+            raise FileNotFoundError(NOTO_REGULAR)
+    except Exception as e:
+        print(f"한글 폰트 로드 실패: {e}", file=sys.stderr)
+        sys.exit(1)
 
 
 def safe_filename(s: str) -> str:
@@ -79,10 +89,17 @@ def render_pdf(template_name: str, context: dict, output_path: Path) -> None:
     )
     env.filters["nl2br"] = lambda s: (s or "").replace("\n", "<br>")
     template = env.get_template(template_name)
-    html = template.render(
-        font_path=NOTO_REGULAR.as_uri(),
-        **context,
-    )
+    font_uri = NOTO_REGULAR.as_uri() if NOTO_REGULAR else ""
+    html = template.render(font_path=font_uri, **context)
+
+    if DRY_RUN:
+        # 템플릿 렌더만 검증하고 PDF 출력은 생략. 출력 파일 옆에 .html sidecar 저장.
+        sidecar = output_path.with_suffix(".dry.html")
+        sidecar.write_text(html, encoding="utf-8")
+        print(f"[dry-run] rendered → {sidecar}", file=sys.stderr)
+        return
+
+    from weasyprint import HTML  # 실 빌드 시점에만 import
     HTML(string=html, base_url=str(SCRIPT_DIR)).write_pdf(str(output_path))
 
 
@@ -184,7 +201,13 @@ def main() -> int:
     parser.add_argument("--json", "-j", required=True, help="입력 JSON 파일 경로")
     parser.add_argument("--output-dir", "-o", required=True, help="PDF 저장 디렉터리")
     parser.add_argument("--only", choices=["journal", "report", "capability"], action="append", dest="only", help="생성할 PDF 지정 (반복 가능). 생략 시 전체 생성")
+    parser.add_argument("--dry-run", action="store_true", help="PDF 출력 생략, 템플릿 렌더 결과만 .dry.html 저장 (smoke test 용)")
     args = parser.parse_args()
+
+    global DRY_RUN
+    DRY_RUN = bool(args.dry_run)
+    if not DRY_RUN:
+        _load_runtime()
 
     json_path = Path(args.json)
     if not json_path.exists():

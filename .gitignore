@@ -11,6 +11,10 @@ __pycache__/
 *.egg-info/
 .venv/
 venv/
+.pytest_cache/
+
+# Test artifacts
+*.dry.html
 
 # IDE
 .vscode/

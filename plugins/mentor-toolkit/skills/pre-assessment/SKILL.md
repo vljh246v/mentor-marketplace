@@ -5,7 +5,7 @@ description: Generate 참여자역량결과보고서 (사전 평가지) PDF for 
 
 # Pre-Assessment — 참여자역량결과보고서 PDF 생성
 
-> **전제조건**: `setup-mentor-toolkit` + `init-mentoring` 완료 (Notion에 멘티 분석 페이지 존재해야 함).
+> **전제조건**: 시작 시 `references/preflight-check.md` 절차 수행. 추가 전제: `init-mentoring` 완료 (Notion에 멘티 분석 페이지 존재). 멘티 분석 부재 시 *"init-mentoring을 먼저 실행해서 멘티 분석을 완료해주세요"* 안내 후 종료.
 > 1차 멘토링 시작 전에 작성해서 운영기관에 제출.
 
 ## 처리 절차
@@ -63,10 +63,14 @@ python3 "${CLAUDE_PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
 }
 ```
 
-의존성 없으면:
+의존성 없으면 (venv 권장):
 ```bash
-pip install --break-system-packages --quiet weasyprint jinja2 mplfonts requests
+python3 -m venv ~/.venvs/mentor-toolkit
+source ~/.venvs/mentor-toolkit/bin/activate
+pip install --quiet weasyprint jinja2 mplfonts requests
 ```
+
+> fallback: `pip install --user ...`. 마지막 수단으로만 `pip install --break-system-packages ...`. 자세한 설치 안내는 `create-report` 스킬 의존성 섹션 참조.
 
 ### Step 5: 결과 안내
 

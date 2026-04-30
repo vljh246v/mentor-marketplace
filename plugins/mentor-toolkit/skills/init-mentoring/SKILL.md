@@ -5,7 +5,7 @@ description: Kick off the full mentoring workflow for a new mentee. Use when the
 
 # Init Mentoring — 멘토링 워크플로우 진입점
 
-> **전제조건**: `⚙️ 멘토링 설정` 페이지가 Notion에 존재해야 함. 없으면 먼저 `setup-mentor-toolkit` 스킬을 실행하라고 안내 후 종료.
+> **전제조건**: 시작 시 `references/preflight-check.md` 절차로 `⚙️ 멘토링 설정` 페이지 존재·무결성 검증. 부재/불완전이면 거기 명시된 표준 메시지 안내 후 종료.
 
 새 멘티 1명을 받기 시작할 때 가장 먼저 발동되는 스킬. 시작 시 `⚙️ 멘토링 설정`을 읽어 멘토 분야를 확인. 이 스킬 하나로 다음을 처리한다.
 

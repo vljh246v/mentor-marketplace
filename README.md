@@ -17,14 +17,25 @@ https://docs.claude.com/en/docs/claude-code 에서 설치.
 `~/.claude.json` 또는 작업 디렉터리의 `.mcp.json`에 Notion MCP를 등록합니다. `claude mcp add notion ...` 명령이나 공식 가이드 참고.
 
 **Python 의존성 (PDF 생성용)**  
-처음 보고서를 만들 때 안내가 뜨지만, 미리 설치해두면 더 매끄럽습니다.
+처음 보고서를 만들 때 안내가 뜨지만, 미리 설치해두면 더 매끄럽습니다. **venv 사용을 권장합니다** (시스템 Python 오염 방지).
+
 ```bash
-pip install --break-system-packages weasyprint jinja2 mplfonts requests
+# 1. 전용 venv 생성 (한 번만)
+python3 -m venv ~/.venvs/mentor-toolkit
+source ~/.venvs/mentor-toolkit/bin/activate
+
+# 2. 패키지 설치
+pip install weasyprint jinja2 mplfonts requests
 ```
-macOS라면 시스템 라이브러리도 필요할 수 있습니다.
+
+이후 Claude Code를 실행하기 전 같은 셸에서 `source ~/.venvs/mentor-toolkit/bin/activate`만 해두면 됩니다.
+
+macOS라면 시스템 라이브러리도 필요합니다.
 ```bash
 brew install pango
 ```
+
+> venv를 쓰지 않을 거라면 `pip install --user weasyprint jinja2 mplfonts requests`를 권장합니다. 시스템 Python 보호 정책(PEP 668)을 무시하는 `--break-system-packages`는 마지막 수단으로만 사용하세요.
 
 ### 2단계. 플러그인 설치
 
@@ -248,6 +259,22 @@ Notion 회차 페이지의 `📷 사진` 섹션에 이미지를 첨부하면, `c
 
 **Q. PDF 저장 위치를 바꾸고 싶을 때는?**  
 *"김지훈 보고서 PDF 만들어줘. ~/Documents/멘토링/에 저장해줘"* 처럼 경로를 함께 알려주면 됩니다.
+
+---
+
+## 개발자용 — 테스트
+
+`build_pdfs.py`에 `--dry-run` 플래그가 있어 weasyprint·시스템 라이브러리 없이도 템플릿 회귀를 검증할 수 있습니다.
+
+```bash
+python3 -m venv ~/.venvs/mentor-toolkit
+source ~/.venvs/mentor-toolkit/bin/activate
+pip install jinja2 mplfonts pytest
+
+pytest tests/ -v
+```
+
+자세한 내용은 [`tests/README.md`](tests/README.md) 참조.
 
 ---
 

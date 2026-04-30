@@ -1,0 +1,24 @@
+{
+  "mentor.org": "예시 그룹",
+  "mentor.name": "홍길동",
+  "mentee.org": "예시 재단",
+  "mentee.name": "박미영",
+  "mentoring.field": "08. 문화·예술·디자인·방송",
+
+  "s1.datetime": "2026.04.29.(수) 14:00 ~ 16:00",
+  "s1.place": "온라인",
+  "s1.session": "1회차",
+  "s1.topic": "포트폴리오 진단",
+  "s1.content": "케이스 스터디 3건 점검. 시각 완성도는 높으나 문제 정의 단계 서술이 약함.",
+
+  "r.outcome": "1회 단축 진행으로 마무리.",
+  "r.support": "포트폴리오 케이스 스터디 구조 코칭.",
+  "r.suggest": "추후 케이스 스터디 1건을 새로 작성해보면 좋음.",
+  "r.final": "조기 종료 — 멘티 일정 사정.",
+  "r.signYear": "2026",
+  "r.signMonth": "4",
+  "r.signDay": "29",
+  "r.signOrg": "예시 그룹",
+  "r.signTitle": "프로덕트 디자이너",
+  "r.signName": "홍길동"
+}

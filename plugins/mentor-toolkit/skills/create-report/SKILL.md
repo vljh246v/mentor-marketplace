@@ -5,7 +5,7 @@ description: Generate the official 청년미래플러스 mentoring result docume
 
 # Create Report — 청년미래플러스 PDF 생성기
 
-> **전제조건**: `setup-mentor-toolkit`이 한 번 실행돼서 `⚙️ 멘토링 설정`이 있어야 함. 없으면 `setup-mentor-toolkit` 먼저 실행하라고 안내 후 종료.
+> **전제조건**: 시작 시 `references/preflight-check.md` 절차로 `⚙️ 멘토링 설정` 검증. 부재/불완전 시 표준 메시지 안내 후 종료. 추가 전제: 멘티 페이지에 회차 노트 1개 이상 존재 (Step 1에서 확인).
 
 ## 결과물 (PDF 2개)
 
@@ -151,9 +151,15 @@ sudo apt install libpango-1.0-0 libpangoft2-1.0-0 libcairo2
 # Fedora/RHEL
 sudo dnf install pango cairo
 
-# 2단계: Python 패키지 설치
-pip install --break-system-packages --quiet weasyprint jinja2 mplfonts requests
+# 2단계: Python 패키지 설치 (venv 권장)
+python3 -m venv ~/.venvs/mentor-toolkit
+source ~/.venvs/mentor-toolkit/bin/activate
+pip install --quiet weasyprint jinja2 mplfonts requests
 ```
+
+> venv 미사용 시 fallback 우선순위: `pip install --user ...` → 마지막 수단으로만 `pip install --break-system-packages ...`. PEP 668 시스템 Python 보호 정책 우회는 권장하지 않습니다.
+
+스킬 실행 시 `python3`이 위 패키지를 import 못 하면 멘토에게 venv activate 후 재시도 안내. CLAUDE_PLUGIN_ROOT 셸이 venv를 상속받지 못하면 절대경로(`~/.venvs/mentor-toolkit/bin/python3`)로 호출.
 
 #### 사전 점검 스크립트
 
