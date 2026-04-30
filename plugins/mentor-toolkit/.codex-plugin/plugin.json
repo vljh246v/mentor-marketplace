@@ -1,0 +1,25 @@
+{
+  "name": "mentor-toolkit",
+  "version": "0.1.5",
+  "description": "정부 청년 멘토링 사업 자동화 — 멘티 등록·분석, 회차 진행, 회차 사이 작업, 운영기관 제출용 PDF 결과보고서 생성. 분야 무관, 회차 가변, 한글 PDF 직접 출력",
+  "author": {
+    "name": "jaehyun"
+  },
+  "license": "MIT",
+  "keywords": ["mentoring", "backend", "career", "korean"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Mentor Toolkit",
+    "shortDescription": "정부 청년 멘토링 운영 자동화 도구",
+    "longDescription": "멘티 등록, 사전 분석, 회차 진행, 회차 사이 작업, 운영기관 제출용 PDF 결과보고서 생성을 돕는 Codex용 멘토링 자동화 플러그인입니다.",
+    "developerName": "jaehyun",
+    "category": "Productivity",
+    "capabilities": ["Write"],
+    "defaultPrompt": [
+      "멘토링 셋업해줘",
+      "새 멘티 등록하고 분석해줘",
+      "운영기관 제출용 결과보고서 만들어줘"
+    ],
+    "brandColor": "#2563EB"
+  }
+}

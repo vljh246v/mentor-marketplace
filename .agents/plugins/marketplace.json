@@ -1,0 +1,20 @@
+{
+  "name": "mentor-marketplace",
+  "interface": {
+    "displayName": "Mentor Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "mentor-toolkit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mentor-toolkit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

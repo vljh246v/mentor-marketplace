@@ -1,6 +1,6 @@
 # mentor-toolkit
 
-정부 청년 멘토링 사업의 운영기관 제출 양식 자동화 **Claude Code** 플러그인입니다. 멘토가 Notion 연결과 기본 설정을 한 번만 해두면, 이후 멘티 자료를 건네주는 것만으로 등록·분석·회차 진행·PDF 보고서까지 한 흐름으로 처리됩니다.
+정부 청년 멘토링 사업의 운영기관 제출 양식 자동화 **Claude Code / Codex** 플러그인입니다. 멘토가 Notion 연결과 기본 설정을 한 번만 해두면, 이후 멘티 자료를 건네주는 것만으로 등록·분석·회차 진행·PDF 보고서까지 한 흐름으로 처리됩니다.
 
 ---
 
@@ -8,13 +8,14 @@
 
 ### 1단계. 시작 전 준비 (1회)
 
-세 가지를 미리 갖춰두면 됩니다.
+세 가지를 미리 갖춰두면 됩니다. 이 플러그인은 **Claude Code와 Codex 둘 다에서 사용 가능**합니다.
 
-**Claude Code CLI**  
-https://docs.claude.com/en/docs/claude-code 에서 설치.
+**실행 환경**  
+- Claude Code: https://docs.claude.com/en/docs/claude-code 에서 설치.
+- Codex: 이 저장소의 `.codex-plugin` / `.agents/plugins/marketplace.json` 구성을 통해 로컬 플러그인으로 사용.
 
 **Notion MCP 연결**  
-`~/.claude.json` 또는 작업 디렉터리의 `.mcp.json`에 Notion MCP를 등록합니다. `claude mcp add notion ...` 명령이나 공식 가이드 참고.
+Claude Code는 `~/.claude.json` 또는 작업 디렉터리의 `.mcp.json`에 Notion MCP를 등록합니다. Codex는 Notion 커넥터가 활성화된 세션에서 사용할 수 있습니다.
 
 **Python 의존성 (PDF 생성용)**  
 처음 보고서를 만들 때 안내가 뜨지만, 미리 설치해두면 더 매끄럽습니다. **venv 사용을 권장합니다** (시스템 Python 오염 방지).
@@ -28,7 +29,7 @@ source ~/.venvs/mentor-toolkit/bin/activate
 pip install weasyprint jinja2 mplfonts requests
 ```
 
-이후 Claude Code를 실행하기 전 같은 셸에서 `source ~/.venvs/mentor-toolkit/bin/activate`만 해두면 됩니다.
+이후 Claude Code나 Codex를 실행하기 전 같은 셸에서 `source ~/.venvs/mentor-toolkit/bin/activate`만 해두면 됩니다.
 
 macOS라면 시스템 라이브러리도 필요합니다.
 ```bash
@@ -38,6 +39,8 @@ brew install pango
 > venv를 쓰지 않을 거라면 `pip install --user weasyprint jinja2 mplfonts requests`를 권장합니다. 시스템 Python 보호 정책(PEP 668)을 무시하는 `--break-system-packages`는 마지막 수단으로만 사용하세요.
 
 ### 2단계. 플러그인 설치
+
+#### Claude Code
 
 ```bash
 # 마켓플레이스 등록
@@ -54,9 +57,18 @@ claude plugin marketplace update mentor-marketplace
 claude plugin install mentor-toolkit@mentor-marketplace
 ```
 
+#### Codex
+
+이 저장소는 Codex용 로컬 마켓플레이스 파일을 함께 제공합니다.
+
+- Codex 플러그인 매니페스트: `plugins/mentor-toolkit/.codex-plugin/plugin.json`
+- Codex 로컬 마켓플레이스: `.agents/plugins/marketplace.json`
+
+Codex에서 이 저장소를 플러그인 마켓플레이스 루트로 등록하면 `mentor-toolkit`을 로컬 플러그인으로 설치할 수 있습니다. 기존 Claude Code용 `.claude-plugin` 구성은 그대로 유지됩니다.
+
 ### 3단계. 셋업 (1회만)
 
-Claude Code를 열고 이렇게 입력하면 됩니다.
+Claude Code나 Codex를 열고 이렇게 입력하면 됩니다.
 
 ```
 > 셋업해줘

@@ -57,7 +57,11 @@ DATA_JSON=/tmp/pre_assessment_$$.json
 OUT_DIR="${MENTOR_OUTPUT_DIR:-$(pwd)}"
 mkdir -p "$OUT_DIR"
 
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
+# CLAUDE_PLUGIN_ROOT는 Claude Code에서는 쓸 수 있지만 Codex에서는 보장되지 않는다.
+# Codex에서는 현재 설치된 mentor-toolkit 플러그인 루트 절대경로를 넣는다.
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-/absolute/path/to/mentor-toolkit}"
+
+python3 "${PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
   --json "$DATA_JSON" \
   --output-dir "$OUT_DIR" \
   --only capability

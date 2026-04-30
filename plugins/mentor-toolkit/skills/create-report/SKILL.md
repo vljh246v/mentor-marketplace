@@ -133,18 +133,25 @@ description: Generate the official government youth-mentoring result documents a
 
 ### Step 5: PDF 생성 스크립트 호출
 
-데이터를 JSON으로 임시 저장한 뒤 `scripts/build_pdfs.py` 호출. 출력 디렉터리는 멘토가 명시한 경로 또는 기본값(현재 작업 디렉터리 `pwd`):
+데이터를 JSON으로 임시 저장한 뒤 `scripts/build_pdfs.py` 호출. 출력 디렉터리는 멘토가 명시한 경로 또는 기본값(현재 작업 디렉터리 `pwd`).
+
+`CLAUDE_PLUGIN_ROOT`가 있으면 사용해도 되지만, Codex 환경에서는 보장되지 않는다. 스킬 파일 위치를 기준으로 플러그인 루트의 절대경로를 먼저 확정한 뒤 `PLUGIN_ROOT`에 넣어 호출한다.
 
 ```bash
 # 데이터 JSON을 임시 파일로 작성 (Write tool 사용 권장 — 따옴표·$ 안전)
 DATA_JSON=/tmp/mentor_report_$$.json
+
+# 플러그인 루트 절대경로
+# - Claude Code: ${CLAUDE_PLUGIN_ROOT}가 있으면 사용 가능
+# - Codex: 현재 설치된 mentor-toolkit 플러그인 루트 경로를 절대경로로 지정
+PLUGIN_ROOT="${CLAUDE_PLUGIN_ROOT:-/absolute/path/to/mentor-toolkit}"
 
 # 출력 디렉터리 결정
 OUT_DIR="${MENTOR_OUTPUT_DIR:-$(pwd)}"   # 멘토가 다른 경로 지정 시 그쪽으로
 mkdir -p "$OUT_DIR"
 
 # PDF 생성 (mplfonts·weasyprint 의존)
-python3 "${CLAUDE_PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
+python3 "${PLUGIN_ROOT}/skills/create-report/scripts/build_pdfs.py" \
   --json "$DATA_JSON" \
   --output-dir "$OUT_DIR" \
   --only journal --only report
@@ -175,7 +182,7 @@ pip install --quiet weasyprint jinja2 mplfonts requests
 
 > venv 미사용 시 fallback 우선순위: `pip install --user ...` → 마지막 수단으로만 `pip install --break-system-packages ...`. PEP 668 시스템 Python 보호 정책 우회는 권장하지 않습니다.
 
-스킬 실행 시 `python3`이 위 패키지를 import 못 하면 멘토에게 venv activate 후 재시도 안내. CLAUDE_PLUGIN_ROOT 셸이 venv를 상속받지 못하면 절대경로(`~/.venvs/mentor-toolkit/bin/python3`)로 호출.
+스킬 실행 시 `python3`이 위 패키지를 import 못 하면 멘토에게 venv activate 후 재시도 안내. 셸이 venv를 상속받지 못하면 절대경로(`~/.venvs/mentor-toolkit/bin/python3`)로 호출. `CLAUDE_PLUGIN_ROOT`가 없는 환경에서는 위 예시처럼 `PLUGIN_ROOT`를 플러그인 루트 절대경로로 명시한다.
 
 #### 사전 점검 스크립트
 
