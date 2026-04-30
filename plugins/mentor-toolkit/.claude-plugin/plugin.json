@@ -1,6 +1,6 @@
 {
   "name": "mentor-toolkit",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "정부 청년 멘토링 사업 자동화 — 멘티 등록·분석, 회차 진행, 회차 사이 작업, 운영기관 제출용 PDF 결과보고서 생성. 분야 무관(설정에서 선택), 회차 가변(1~N), 한글 PDF 직접 출력",
   "author": {
     "name": "jaehyun"

@@ -53,8 +53,8 @@ description: Write a freeform Notion-only mentoring summary (강점·약점·다
 - 도달점: {1줄}
 - 가장 큰 변화: {1줄}
 
-🪜 공식 양식이 필요하시면
-"OO님 보고서 PDF 만들어줘"라고 하시면 create-report가 운영기관 제출용 PDF 3종을 자동 생성.
+🪜 다음 권장 액션
+- *"OO님 보고서 PDF 만들어줘"* → create-report (운영기관 제출용 PDF 3종 공식 생성)
 ```
 
 ## 다른 스킬과의 관계

@@ -207,6 +207,13 @@ description: Briefs the mentor before a new mentoring session by loading prior s
 
 이걸 본 멘토는 5분 내로 컨텍스트를 복원하고 미팅을 시작할 수 있다.
 
+## 🪜 다음 권장 액션
+
+> 출력 카드 마지막에 항상 1~3개 제시. 멘토가 그대로 복사해서 외칠 수 있는 트리거 문구 + 호출될 skill 이름 명시.
+
+- *"OO님 N차 끝"* → end-session (회차 진행 후 노트 정리 및 트래커 갱신)
+- *"OO님 자소서 검토해줘"* → between-sessions (회차 사이 과제물 검토)
+
 ## 회차 사이의 멘티 업데이트 처리
 
 회차 사이에 멘티가 메일·메시지·Slack으로 진척을 알려오는 경우:
