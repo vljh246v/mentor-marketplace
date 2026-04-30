@@ -1,6 +1,6 @@
 ---
 name: report-writer
-description: Write a freeform Notion-only mentoring summary (강점·약점·다음 스텝) — useful for internal mentor notes or sharing a casual recap with a mentee outside official submission. For the OFFICIAL 청년미래플러스 양식 (PDF 3종), use the `create-report` skill instead. Use this skill when the user explicitly says "노션에만 정리해줘", "비공식 정리", "멘티에게 보낼 요약" — otherwise default to `create-report`.
+description: Write a freeform Notion-only mentoring summary (강점·약점·다음 스텝) — useful for internal mentor notes or sharing a casual recap with a mentee outside official submission. For the OFFICIAL 운영기관 제출용 양식 (PDF 3종), use the `create-report` skill instead. Use this skill when the user explicitly says "노션에만 정리해줘", "비공식 정리", "멘티에게 보낼 요약" — otherwise default to `create-report`.
 ---
 
 # Report Writer (Notion 전용 비공식 정리)
@@ -14,7 +14,7 @@ description: Write a freeform Notion-only mentoring summary (강점·약점·다
 - 공식 양식 작성 전 초안
 
 공식 제출용 양식이 필요하면 즉시 `create-report`로 위임:
-> "공식 청년미래플러스 PDF 3종이 필요하시면 *'OO님 보고서 PDF 만들어줘'* 라고 말씀해 주세요."
+> "공식 운영기관 제출용 PDF 3종이 필요하시면 *'OO님 보고서 PDF 만들어줘'* 라고 말씀해 주세요."
 
 ## 처리 절차
 
@@ -54,7 +54,7 @@ description: Write a freeform Notion-only mentoring summary (강점·약점·다
 - 가장 큰 변화: {1줄}
 
 🪜 공식 양식이 필요하시면
-"OO님 보고서 PDF 만들어줘"라고 하시면 create-report가 청년미래플러스 PDF 3종을 자동 생성.
+"OO님 보고서 PDF 만들어줘"라고 하시면 create-report가 운영기관 제출용 PDF 3종을 자동 생성.
 ```
 
 ## 다른 스킬과의 관계

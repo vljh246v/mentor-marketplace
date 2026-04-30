@@ -12,7 +12,7 @@ description: Kick off the full mentoring workflow for a new mentee. Use when the
 1. 업로드된 문서(이력서/자소서/포트폴리오) 파싱
 2. 멘티 유형 판별 (구직자 / 재직자-적응 / 재직자-이직 / 재직자-성장 / 학생/취준)
 3. Notion 멘티 트래커 DB에 행 추가
-4. Notion `🏡 청년미래플러스 멘토링` 아래 멘티 이름 페이지 생성
+4. Notion `🏡 멘토링` 허브 아래 멘티 이름 페이지 생성
 5. 그 페이지 안에 "멘티 분석" 하위 페이지 생성 (분석 템플릿 적용)
 6. `mentee-analyzer` 스킬을 자동 호출해 강점·약점·전략 채움
 7. 다음 액션 3개 제안 (회사 추천 / 1차 멘토링 일정 / 사전 과제 부여)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-청년미래플러스 멘토링 결과 문서 PDF 생성기.
+정부 청년 멘토링 사업 결과 문서 PDF 생성기.
 
 입력: --json 으로 JSON 파일 경로 (data-k 스키마와 동일)
 출력: --only 플래그로 1~3개 선택 생성 (생략 시 3개 전부)
@@ -197,7 +197,7 @@ def build_capability_pdf(data: dict, output_dir: Path, mentee: str) -> Path:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="청년미래플러스 멘토링 PDF 생성")
+    parser = argparse.ArgumentParser(description="정부 청년 멘토링 사업 PDF 생성")
     parser.add_argument("--json", "-j", required=True, help="입력 JSON 파일 경로")
     parser.add_argument("--output-dir", "-o", required=True, help="PDF 저장 디렉터리")
     parser.add_argument("--only", choices=["journal", "report", "capability"], action="append", dest="only", help="생성할 PDF 지정 (반복 가능). 생략 시 전체 생성")

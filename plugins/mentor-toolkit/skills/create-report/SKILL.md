@@ -1,9 +1,9 @@
 ---
 name: create-report
-description: Generate the official 청년미래플러스 mentoring result documents as PDF files directly from a mentee's Notion page. Output 2 PDFs ([별지 3-1] 멘토링 일지 3회차 통합 + [별지 3-2] 결과보고서). Pulls session notes, photos, and analysis from Notion automatically. Writes in natural human-mentor voice — no AI tells. Session datetimes follow the operator's announced schedule (set in 멘토링 설정), not actual mentoring dates. Use when the user says "보고서 만들어줘", "양식 채워줘", "결과보고서 작성", "PDF 뽑아줘", "create report", "공식 양식", "제출용 보고서", or shares a Notion mentee page URL after mentoring ends. Works for any session count (1~N), respects 구직청년/재직청년 track differences. For 참여자역량결과보고서(사전 평가지), use pre-assessment skill instead.
+description: Generate the official government youth-mentoring result documents as PDF files directly from a mentee's Notion page. Output 2 PDFs ([별지 3-1] 멘토링 일지 3회차 통합 + [별지 3-2] 결과보고서). Pulls session notes, photos, and analysis from Notion automatically. Writes in natural human-mentor voice — no AI tells. Session datetimes follow the operator's announced schedule (set in 멘토링 설정), not actual mentoring dates. Use when the user says "보고서 만들어줘", "양식 채워줘", "결과보고서 작성", "PDF 뽑아줘", "create report", "공식 양식", "제출용 보고서", or shares a Notion mentee page URL after mentoring ends. Works for any session count (1~N), respects 구직청년/재직청년 track differences. For 참여자역량결과보고서(사전 평가지), use pre-assessment skill instead.
 ---
 
-# Create Report — 청년미래플러스 PDF 생성기
+# Create Report — 운영기관 제출용 PDF 생성기
 
 > **전제조건**: 시작 시 `references/preflight-check.md` 절차로 `⚙️ 멘토링 설정` 검증. 부재/불완전 시 표준 메시지 안내 후 종료. 추가 전제: 멘티 페이지에 회차 노트 1개 이상 존재 (Step 1에서 확인).
 
