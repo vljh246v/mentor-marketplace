@@ -23,7 +23,7 @@ description: Generate the official government youth-mentoring result documents a
 먼저 다음 reference 3개를 무조건 읽고 시작:
 - `references/official-form-schema.md` — data-k 키 매핑 명세
 - `references/official-format.md` — 양식 사양
-- `references/natural-tone.md` — AI 티 안 나는 작성 규칙
+- `../../references/natural-tone.md` — AI 티 안 나는 작성 규칙
 
 위반 금지:
 - **NCS 분야**: `⚙️ 멘토링 설정` 페이지의 NCS 코드 사용
@@ -114,6 +114,22 @@ description: Generate the official government youth-mentoring result documents a
 - `r.final`: 한 단락. 멘토 1인칭 OK. 멘티에게 남기는 마지막 말
 - `r.signYear/Month/Day`: 제출일
 - `r.signOrg/Title/Name`: 설정에서 가져온 멘토 본인 정보
+
+## 검수 단계 (출력 직전 필수)
+
+작성한 한국어 텍스트를 출력하기 전에 `korean-proofreader-agent`(Task 도구)로 검수한다.
+
+호출 입력:
+- 검수할 텍스트 본문 — JSON 텍스트 필드(`sN.content` / `r.outcome` / `r.support` / `r.suggest` / `r.final` / `cap.completeness` / `cap.plan`)를 검수 대상으로 전달
+- `context: notion-note` / `notion-analysis` / `pdf-output` / `chat-card` 중 적절한 값 명시
+  (이 skill의 경우 `context: pdf-output`)
+
+반환된 issue 처리:
+- `severity: high` (명백한 오타·hallucination) → 즉시 적용
+- `severity: medium` / `low` (외래어 표기·반복·톤·AI 시그널) → 멘토에게 1줄로 묶어 confirm 후 적용
+- 빈 배열이면 그대로 출력
+
+검수 1회 통과 후 출력. 통과 안 하면 무한 루프 방지를 위해 최대 2회까지만 재검수.
 
 ### Step 5: PDF 생성 스크립트 호출
 

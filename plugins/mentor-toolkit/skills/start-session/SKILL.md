@@ -14,6 +14,10 @@ description: Briefs the mentor before a new mentoring session by loading prior s
 3. 트래커 상태 갱신
 4. 멘토에게 **회차 시작 직전 브리핑 카드** 전달 → 멘토는 그걸 슥 보고 미팅 시작
 
+## 한국어 톤 규칙
+
+이 skill이 작성하는 모든 한국어 텍스트는 plugin 루트의 `references/natural-tone.md`를 따른다 — AI 시그널 단어 추방, 어미 다양화, 같은 어미 4번 이상 반복 금지, 안전 표현 남발 금지. 작성 후 그 reference의 자가 점검 5문항을 한 번 통과시켜야 출력 가능.
+
 ## 입력
 
 다음 중 하나로 호출:
@@ -91,6 +95,22 @@ description: Briefs the mentor before a new mentoring session by loading prior s
 4. **누적 시그널** — 1·2차 노트에서 "다음에 더 다뤄야겠다"는 흔적
 
 이 4개를 합쳐 3~5개 어젠다 항목으로 정리. 모순되면 멘토에게 *"이거 우선순위 어떠세요"* 1회 묻기.
+
+## 검수 단계 (출력 직전 필수)
+
+작성한 한국어 텍스트를 출력하기 전에 `korean-proofreader-agent`(Task 도구)로 검수한다.
+
+호출 입력:
+- 검수할 텍스트 본문
+- `context: notion-note` / `notion-analysis` / `pdf-output` / `chat-card` 중 적절한 값 명시
+  (이 skill의 경우 브리핑 카드는 `context: chat-card`, 새 회차 페이지 생성 시 본문은 `context: notion-note`)
+
+반환된 issue 처리:
+- `severity: high` (명백한 오타·hallucination) → 즉시 적용
+- `severity: medium` / `low` (외래어 표기·반복·톤·AI 시그널) → 멘토에게 1줄로 묶어 confirm 후 적용
+- 빈 배열이면 그대로 출력
+
+검수 1회 통과 후 출력. 통과 안 하면 무한 루프 방지를 위해 최대 2회까지만 재검수.
 
 ### Step 4: 새 회차 페이지 생성
 

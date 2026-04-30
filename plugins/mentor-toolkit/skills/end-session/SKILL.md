@@ -17,6 +17,10 @@ description: Close out a completed mentoring session by reading the Notion sessi
 
 ---
 
+## 한국어 톤 규칙
+
+이 skill이 작성하는 모든 한국어 텍스트는 plugin 루트의 `references/natural-tone.md`를 따른다 — AI 시그널 단어 추방, 어미 다양화, 같은 어미 4번 이상 반복 금지, 안전 표현 남발 금지. 작성 후 그 reference의 자가 점검 5문항을 한 번 통과시켜야 출력 가능.
+
 ## 처리 절차
 
 ### Step 1: 멘티 + 회차 식별
@@ -57,6 +61,22 @@ N차 페이지 읽었습니다. 2가지만 확인:
 ```
 
 모든 섹션이 채워져 있으면 바로 Step 4로.
+
+## 검수 단계 (출력 직전 필수)
+
+작성한 한국어 텍스트를 출력하기 전에 `korean-proofreader-agent`(Task 도구)로 검수한다.
+
+호출 입력:
+- 검수할 텍스트 본문
+- `context: notion-note` / `notion-analysis` / `pdf-output` / `chat-card` 중 적절한 값 명시
+  (이 skill의 경우 `context: notion-note`)
+
+반환된 issue 처리:
+- `severity: high` (명백한 오타·hallucination) → 즉시 적용
+- `severity: medium` / `low` (외래어 표기·반복·톤·AI 시그널) → 멘토에게 1줄로 묶어 confirm 후 적용
+- 빈 배열이면 그대로 출력
+
+검수 1회 통과 후 출력. 통과 안 하면 무한 루프 방지를 위해 최대 2회까지만 재검수.
 
 ### Step 4: 회차 페이지 구조화 + 기록
 

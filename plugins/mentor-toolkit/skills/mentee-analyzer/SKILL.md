@@ -181,11 +181,28 @@ Notion 멘티 분석 페이지의 "분석 결과" 섹션 + "유형별 멘토링 
 - 다만 약점은 항상 "어떻게 메울 수 있는가"와 함께.
 - "당신은 ~하면 좋겠어요" 같이 멘티에게 직접 말하는 톤은 금지. 이건 **멘토를 위한 분석**이다.
 - 추측은 추측이라고 표시. *"포트폴리오만으로는 정확히 보이지 않지만 ~로 추정"*
+- 문장 수준 한국어 톤(AI 시그널 단어·어미 다양화·안전 표현)은 plugin 루트의 `references/natural-tone.md`를 따른다. 작성 후 자가 점검 5문항 통과 필수.
 
 ## 데이터 부족 처리
 
 - 자소서·이력서·포트폴리오 중 일부만 있어도 진행. 빠진 부분은 "추가 정보가 있으면 분석 정확도 ↑" 표시.
 - GitHub URL이 있으면 fetch해서 최근 활동·언어·README 품질 점검.
+
+## 검수 단계 (출력 직전 필수)
+
+작성한 한국어 텍스트를 출력하기 전에 `korean-proofreader-agent`(Task 도구)로 검수한다.
+
+호출 입력:
+- 검수할 텍스트 본문
+- `context: notion-note` / `notion-analysis` / `pdf-output` / `chat-card` 중 적절한 값 명시
+  (이 skill의 경우 `context: notion-analysis`)
+
+반환된 issue 처리:
+- `severity: high` (명백한 오타·hallucination) → 즉시 적용
+- `severity: medium` / `low` (외래어 표기·반복·톤·AI 시그널) → 멘토에게 1줄로 묶어 confirm 후 적용
+- 빈 배열이면 그대로 출력
+
+검수 1회 통과 후 출력. 통과 안 하면 무한 루프 방지를 위해 최대 2회까지만 재검수.
 
 ## Notion 페이지 업데이트
 

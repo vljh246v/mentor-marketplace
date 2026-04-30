@@ -29,11 +29,26 @@ description: Generate 참여자역량결과보고서 (사전 평가지) PDF for 
 ### Step 3: cap 필드 작성
 
 `create-report/references/official-form-schema.md`의 `cap.*` 섹션 형식 준수.
-`create-report/references/natural-tone.md` 적용 (AI 시그널 단어 추방).
+`../../references/natural-tone.md` 적용 (AI 시그널 단어 추방).
 
 - **`cap.docReview`**: 이력서·포트폴리오·직무능력은행 계좌 인증서 → ● 4항목 형식
 - **`cap.completeness`**: 강점 1~2개 + 약점 1~2개 → "1줄 요지 : 서술" 형식
 - **`cap.plan`**: completeness 강점·약점과 1:1 대응 → 구체 강의명·도서명 명시
+
+### Step 3.5: 검수 단계 (PDF 빌드 직전 필수)
+
+작성한 `cap.*` 텍스트 필드(`cap.completeness`, `cap.plan`, `cap.docReview`)를 출력하기 전에 `korean-proofreader-agent`(Task 도구)로 검수한다.
+
+호출 입력:
+- 검수할 텍스트 본문 (cap 필드 합본)
+- `context: pdf-output` (운영기관 제출 PDF — 존댓말 강제)
+
+반환된 issue 처리:
+- `severity: high` (명백한 오타·hallucination) → 즉시 적용
+- `severity: medium` / `low` (외래어 표기·반복·톤·AI 시그널) → 멘토에게 1줄로 묶어 confirm 후 적용
+- 빈 배열이면 그대로 PDF 빌드 진행
+
+검수 1회 통과 후 빌드. 통과 안 하면 무한 루프 방지를 위해 최대 2회까지만 재검수.
 
 ### Step 4: JSON 작성 + PDF 생성
 
