@@ -201,6 +201,29 @@ Claude Code를 열고 이렇게 입력하면 됩니다.
 
 ---
 
+## 📖 트리거 사전 (멘토용)
+
+어떤 문구를 외쳐야 어떤 skill이 발동하는지 한눈에. 셋업 후 Notion `🚀 사용 가이드` 페이지에도 자동으로 박힌다.
+
+| 멘토 상황 | 외쳐야 할 문구 (예시) | 호출되는 skill |
+|----------|----------------------|----------------|
+| 처음 셋업 | "셋업해줘" | setup-mentor-toolkit |
+| 새 멘티 등록 | "OO 멘토링 시작 [이력서 경로]" | init-mentoring |
+| 멘티 분석만 | "OO 분석해줘" | mentee-analyzer |
+| 1차 시작 전 사전 평가지 | "OO 사전 평가지 만들어줘" | pre-assessment |
+| 회사 추천 | "OO 회사 추천" | company-recommender |
+| 이력서 리뷰 | "OO 이력서 봐줘" | resume-reviewer |
+| 면접 질문 | "OO 면접 질문 만들어줘" | interview-prep |
+| 회차 시작 | "OO N차 시작" | start-session |
+| 회차 종료 | "OO N차 끝" | end-session |
+| 회차 사이 과제 검토 | "OO 자소서 검토해줘" | between-sessions |
+| 비공식 노션 정리 | "OO 노션에만 정리해줘" | report-writer |
+| 종료 PDF | "OO 보고서 PDF 만들어줘" | create-report |
+
+> 위 문구는 예시. 자연어로 비슷하게 말해도 Claude가 알아서 매핑. 각 skill 출력 카드 마지막의 **🪜 다음 권장 액션** 라인이 다음 단계 트리거를 그대로 알려준다.
+
+---
+
 ## 포함된 스킬
 
 | 스킬 | 역할 | 시점 |
