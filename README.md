@@ -17,6 +17,9 @@
 **Notion MCP 연결**  
 Claude Code는 `~/.claude.json` 또는 작업 디렉터리의 `.mcp.json`에 Notion MCP를 등록합니다. Codex는 Notion 커넥터가 활성화된 세션에서 사용할 수 있습니다.
 
+**Scrapling MCP 연결 (선택, 회사 추천 품질 향상용)**
+`company-recommender`는 Scrapling MCP가 있으면 원티드·사람인·직행의 라이브 공고와 상세 페이지를 우선 수집합니다. Scrapling은 플러그인 필수 조건은 아니며, 없으면 WebFetch/WebSearch 또는 사용자가 제공한 JD로 fallback합니다. Scrapling 없이 만든 추천에는 `수집 방식`과 `검증 신뢰도` 제한을 표시합니다.
+
 **Python 의존성 (PDF 생성용)**  
 처음 보고서를 만들 때 안내가 뜨지만, 미리 설치해두면 더 매끄럽습니다. **venv 사용을 권장합니다** (시스템 Python 오염 방지).
 
@@ -247,7 +250,7 @@ Claude Code나 Codex를 열고 이렇게 입력하면 됩니다.
 | **`end-session`** | **회차 직후 Notion 읽고 마무리 — 노트 구조화·트래커 갱신** | **각 회차 끝난 직후** |
 | **`between-sessions`** | **회차 사이 결과물 검토·미완 과제 처리·진척 기록** | **회차와 회차 사이** |
 | `mentee-analyzer` | 유형별 강점·약점·전략 분석 | init 자동 호출 + 재분석 시 |
-| `company-recommender` | 분야·유형에 맞는 회사 추천 | "회사 추천해줘" 시점 |
+| `company-recommender` | 분야·유형에 맞는 회사 추천. 가능하면 Scrapling MCP로 라이브 공고와 회사 검증을 수행하고, 없으면 fallback 결과에 검증 신뢰도를 표시 | "회사 추천해줘" 시점 |
 | `resume-reviewer` | 이력서·포트폴리오 리뷰 | "이력서 봐줘" 시점 |
 | `interview-prep` | 면접 질문 + 답변 가이드 | 면접 임박 |
 | `create-report` | **운영기관 제출용 PDF 2종 생성 (멘토링 일지 + 결과보고서)** | 멘토링 종료 시 |
@@ -259,7 +262,7 @@ Claude Code나 Codex를 열고 이렇게 입력하면 됩니다.
 
 | 에이전트 | 역할 | 누가 호출하나 |
 |---------|------|-------------|
-| `company-research-agent` | 원티드/사람인/직행 병렬 fetch → 구조화된 JD 데이터 반환 | `company-recommender` |
+| `company-research-agent` | Scrapling MCP가 있으면 원티드/사람인/직행 병렬 fetch, 없으면 WebFetch/WebSearch fallback → 구조화된 JD 데이터 반환 | `company-recommender` |
 | `mock-interviewer-agent` | 격리된 채팅으로 모의 면접 진행 (질문→답변→피드백) | `interview-prep` 또는 멘토 직접 |
 
 ---
